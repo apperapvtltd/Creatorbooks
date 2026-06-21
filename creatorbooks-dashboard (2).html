@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CreatorBooks — Home Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;font-family:'Inter',system-ui,sans-serif;font-size:14px;background:#F8FAFC;color:#0F172A;-webkit-font-smoothing:antialiased}
+
+/* ── SHELL ── */
+.shell{display:flex;height:100vh;overflow:hidden}
+
+/* ── SIDEBAR ── */
+.sidebar{width:240px;background:#fff;border-right:1px solid #E2E8F0;display:flex;flex-direction:column;flex-shrink:0;height:100vh}
+.sb-brand{display:flex;align-items:center;gap:11px;padding:16px;height:64px;border-bottom:1px solid #E2E8F0}
+.sb-logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#2563EB,#6D4AFF);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-logo svg{width:16px;height:16px}
+.sb-name{font-size:15px;font-weight:800;color:#0F172A;line-height:1.2}
+.sb-sub{font-size:10px;color:#94A3B8;text-transform:uppercase;letter-spacing:.1em}
+.sb-nav{flex:1;padding:12px 10px;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:10px;cursor:pointer;color:#64748B;font-size:13px;font-weight:500;transition:all .12s;margin-bottom:2px;user-select:none;text-decoration:none}
+.nav-item:hover{background:#F1F5F9;color:#0F172A}
+.nav-item.active{background:linear-gradient(135deg,rgba(37,99,235,.09),rgba(109,74,255,.07));color:#1D4ED8;font-weight:700}
+.nav-item.active i{color:#2563EB}
+.nav-item i{font-size:18px;width:20px;flex-shrink:0;color:#94A3B8}
+.nav-badge{margin-left:auto;background:#2563EB;color:#fff;font-size:10px;font-weight:700;border-radius:10px;padding:2px 7px;line-height:1.5}
+.nav-new{margin-left:auto;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;font-size:10px;font-weight:700;border-radius:10px;padding:2px 6px}
+.nav-divider{height:1px;background:#E2E8F0;margin:8px 12px}
+.sb-user{padding:12px 14px;border-top:1px solid #E2E8F0;display:flex;align-items:center;gap:10px}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#2563EB,#6D4AFF);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
+.sb-user-name{font-size:13px;font-weight:700;color:#0F172A}
+.sb-user-email{font-size:11px;color:#94A3B8}
+.plan-tag{margin-left:auto;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;font-size:10px;font-weight:700;border-radius:8px;padding:3px 8px}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+
+/* ── HEADER ── */
+.header{height:64px;background:rgba(255,255,255,.97);border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:12px;padding:0 28px;flex-shrink:0;backdrop-filter:blur(8px)}
+.search{display:flex;align-items:center;gap:9px;background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:11px;padding:0 14px;height:40px;flex:1;max-width:340px;transition:border-color .15s,box-shadow .15s}
+.search:focus-within{border-color:#2563EB;box-shadow:0 0 0 3px rgba(37,99,235,.1);background:#fff}
+.search input{border:none;background:transparent;outline:none;font-size:13px;color:#0F172A;width:100%;font-family:inherit}
+.search input::placeholder{color:#94A3B8}
+.search i{font-size:16px;color:#94A3B8}
+.hdr-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:all .12s}
+.btn-primary{background:linear-gradient(135deg,#2563EB,#4F46E5);color:#fff;box-shadow:0 2px 8px rgba(37,99,235,.25)}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-secondary{background:#fff;color:#334155;border:1.5px solid #E2E8F0}
+.btn-secondary:hover{background:#F8FAFC;border-color:#CBD5E1}
+.icon-btn{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1.5px solid #E2E8F0;background:#fff;color:#64748B;position:relative;transition:background .12s}
+.icon-btn:hover{background:#F8FAFC}
+.icon-btn i{font-size:20px}
+.notif-pip{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:#2563EB;border:2px solid #fff}
+.hdr-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#2563EB,#6D4AFF);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;cursor:pointer}
+
+/* ── CONTENT ── */
+.content{flex:1;overflow-y:auto;padding:32px 32px 48px}
+
+/* ── BASE ── */
+.sec{margin-bottom:28px}
+.lbl{font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.card{background:#fff;border:1.5px solid #E2E8F0;border-radius:16px;overflow:hidden}
+.card-p{padding:22px}
+
+/* ── HERO ── */
+.hero{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:28px}
+.hero-greeting{font-size:28px;font-weight:900;color:#0F172A;letter-spacing:-.02em;line-height:1.2}
+.hero-sub{font-size:14px;color:#64748B;margin-top:8px;line-height:1.65;max-width:480px}
+.hero-sub strong{color:#334155;font-weight:700}
+.hero-actions{display:flex;gap:10px;align-items:center;flex-shrink:0;margin-top:4px}
+.quick-create-btn{display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:11px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:inherit;background:linear-gradient(135deg,#2563EB,#6D4AFF);box-shadow:0 4px 14px rgba(37,99,235,.3);transition:all .12s}
+.quick-create-btn:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.35)}
+.quick-create-btn i{font-size:16px}
+
+/* ── KPI GRID ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
+.kpi{border-radius:16px;padding:22px 22px 20px 24px;position:relative;overflow:hidden;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.kpi:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(15,23,42,.14)}
+.kpi-circle{position:absolute;width:100px;height:100px;border-radius:50%;top:-26px;right:-26px;background:rgba(255,255,255,.1);pointer-events:none}
+.kpi-icon{position:absolute;top:20px;right:20px;width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center}
+.kpi-icon i{font-size:20px;color:#fff}
+.kpi-lbl{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;opacity:.7}
+.kpi-val{font-size:28px;font-weight:900;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.kpi-sub{font-size:12px;margin-top:5px;opacity:.55}
+.kpi-change{font-size:12px;font-weight:700;margin-top:9px;display:flex;align-items:center;gap:5px}
+.kpi-change i{font-size:13px}
+.kpi-blue{background:linear-gradient(135deg,#2563EB,#4F46E5)}.kpi-blue .kpi-lbl,.kpi-blue .kpi-val,.kpi-blue .kpi-sub{color:#fff}
+.kpi-purple{background:linear-gradient(135deg,#6D4AFF,#4F46E5)}.kpi-purple .kpi-lbl,.kpi-purple .kpi-val,.kpi-purple .kpi-sub{color:#fff}
+.kpi-green{background:linear-gradient(135deg,#10B981,#059669)}.kpi-green .kpi-lbl,.kpi-green .kpi-val,.kpi-green .kpi-sub{color:#fff}
+.kpi-amber{background:linear-gradient(135deg,#F59E0B,#D97706)}.kpi-amber .kpi-lbl,.kpi-amber .kpi-val,.kpi-amber .kpi-sub{color:#fff}
+.kpi-light{background:#fff;border:1.5px solid #E2E8F0}
+.kpi-light .kpi-icon{background:#F1F5F9}
+.kpi-light .kpi-lbl{color:#94A3B8}
+.kpi-light .kpi-val{color:#0F172A}
+.kpi-light .kpi-sub{color:#94A3B8}
+.ch-up-w{color:rgba(255,255,255,.85)}
+.ch-down-w{color:#FDE68A}
+.ch-flat-w{color:rgba(255,255,255,.5)}
+.ch-up{color:#10B981}
+.ch-down{color:#EF4444}
+
+/* ── AI PANEL ── */
+.ai-panel{border-radius:16px;background:#0B1020;border:1px solid #1E2A3B;overflow:hidden;margin-bottom:28px;position:relative}
+.ai-panel::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 8% 50%,rgba(37,99,235,.18) 0%,transparent 52%),radial-gradient(ellipse at 92% 50%,rgba(109,74,255,.18) 0%,transparent 52%);pointer-events:none}
+.ai-hdr{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 18px;border-bottom:1px solid rgba(255,255,255,.07);position:relative;z-index:1}
+.ai-hdr-left{display:flex;align-items:center;gap:12px}
+.ai-icon-box{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#2563EB,#6D4AFF);display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(109,74,255,.45)}
+.ai-icon-box i{font-size:18px;color:#fff}
+.ai-hdr-title{font-size:15px;font-weight:800;color:#fff}
+.ai-hdr-sub{font-size:12px;color:#475569;margin-top:2px}
+.ai-open-btn{display:flex;align-items:center;gap:7px;padding:9px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid rgba(109,74,255,.35);background:rgba(109,74,255,.18);color:#A78BFA;font-family:inherit;transition:all .12s}
+.ai-open-btn:hover{background:rgba(109,74,255,.28);border-color:rgba(109,74,255,.5)}
+.ai-open-btn i{font-size:15px}
+.ai-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:20px 24px 24px;position:relative;z-index:1}
+.ai-card{border-radius:14px;padding:18px;cursor:pointer;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);transition:border-color .15s,transform .15s}
+.ai-card:hover{border-color:rgba(109,74,255,.45);transform:translateY(-2px)}
+.ai-match-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ai-match-pct{font-size:22px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums}
+.ai-match-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+.ai-bar-wrap{width:48px;height:4px;border-radius:4px;background:rgba(255,255,255,.1);overflow:hidden;align-self:center}
+.ai-bar-fill{height:100%;border-radius:4px}
+.ai-status-badge{display:inline-flex;align-items:center;font-size:11px;font-weight:800;border-radius:8px;padding:4px 10px;margin-bottom:12px;border:1.5px solid}
+.ai-card-title{font-size:15px;font-weight:800;color:#fff;line-height:1.3;margin-bottom:4px}
+.ai-card-sub{font-size:12px;color:#64748B;margin-bottom:14px;line-height:1.45}
+.ai-value{font-size:20px;font-weight:900;color:#60A5FA;font-variant-numeric:tabular-nums;display:block;margin-bottom:2px}
+.ai-value-lbl{font-size:11px;color:#475569;font-weight:600}
+.ai-card-btn{margin-top:14px;width:100%;padding:10px 8px;border-radius:10px;font-size:13px;font-weight:700;color:#94A3B8;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);cursor:pointer;font-family:inherit;transition:all .15s}
+.ai-card-btn:hover{background:rgba(255,255,255,.13);color:#fff;border-color:rgba(255,255,255,.15)}
+
+/* ── 3-COL GRID ── */
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:28px}
+
+/* ── TIMELINE ── */
+.tl-hdr{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 16px;border-bottom:1px solid #F1F5F9}
+.tl-hdr-lbl{font-size:13px;font-weight:700;color:#334155}
+.tl-count{font-size:11px;font-weight:700;color:#2563EB;background:#EFF6FF;border:1.5px solid #BFDBFE;border-radius:20px;padding:3px 10px}
+.tl-body-wrap{padding:18px 20px}
+.tl-item{display:flex;gap:14px}
+.tl-spine{display:flex;flex-direction:column;align-items:center}
+.tl-dot{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tl-dot i{font-size:18px}
+.tl-line{width:2px;flex:1;background:#E2E8F0;margin:5px auto}
+.tl-info{flex:1;padding-bottom:20px}
+.tl-time{font-size:11px;font-weight:700;color:#94A3B8;margin-bottom:3px;letter-spacing:.03em}
+.tl-title{font-size:15px;font-weight:700;color:#0F172A;line-height:1.3}
+.tl-sub{font-size:12px;color:#64748B;margin-top:3px;line-height:1.4}
+
+/* ── QUICK ACTIONS ── */
+.qa-item{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:12px;border:1.5px solid #E2E8F0;margin-bottom:8px;cursor:pointer;background:#fff;transition:all .12s;text-decoration:none}
+.qa-item:hover{border-color:#CBD5E1;transform:translateY(-1px);box-shadow:0 4px 14px rgba(15,23,42,.07)}
+.qa-item:last-child{margin-bottom:0}
+.qa-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qa-icon i{font-size:18px}
+.qa-label{font-size:13px;font-weight:700;flex:1;color:#334155}
+.qa-dark{background:#0B1020;border-color:rgba(255,255,255,.1)}
+.qa-dark:hover{border-color:rgba(109,74,255,.4)}
+.qa-label-dark{color:#C4B5FD}
+.qa-chev{font-size:18px;color:#CBD5E1}
+.qa-chev-dark{font-size:18px;color:#6D4AFF}
+
+/* ── ACTIVITY ── */
+.act-hdr{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 16px;border-bottom:1px solid #F1F5F9}
+.act-hdr-lbl{font-size:13px;font-weight:700;color:#334155}
+.act-view-btn{font-size:12px;font-weight:700;color:#2563EB;background:none;border:none;cursor:pointer;font-family:inherit;padding:4px 8px;border-radius:8px;transition:background .12s}
+.act-view-btn:hover{background:#EFF6FF}
+.act-item{display:flex;align-items:flex-start;gap:12px;padding:14px 20px;border-bottom:1px solid #F8FAFC;cursor:pointer;transition:background .1s}
+.act-item:hover{background:#F8FAFC}
+.act-item:last-child{border-bottom:none}
+.act-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.act-name{font-size:13px;font-weight:700;color:#0F172A}
+.act-sub{font-size:12px;color:#64748B;margin-top:2px;line-height:1.4}
+.act-time{font-size:11px;color:#94A3B8;flex-shrink:0;margin-top:2px;font-weight:500}
+
+/* ── BRANDS ── */
+.brands-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:14px}
+.brands-hdr-left .lbl{margin-bottom:2px}
+.brands-hdr-desc{font-size:12px;color:#64748B;margin-top:2px}
+.brands-view-btn{font-size:12px;font-weight:700;color:#2563EB;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:inherit;padding:6px 10px;border-radius:8px;transition:background .12s}
+.brands-view-btn:hover{background:#EFF6FF}
+.brands-view-btn i{font-size:14px}
+.brands-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+.brand-card{border-radius:16px;padding:20px;background:#fff;border:1.5px solid #E2E8F0;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s}
+.brand-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(15,23,42,.1);border-color:#CBD5E1}
+.brand-hdr{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.brand-logo{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;flex-shrink:0}
+.brand-name{font-size:14px;font-weight:800;color:#0F172A}
+.brand-type{font-size:11px;color:#64748B;margin-top:2px}
+.brand-stats{display:flex;justify-content:space-between;margin-bottom:12px}
+.stat-label{font-size:11px;color:#94A3B8;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px}
+.stat-val{font-size:16px;font-weight:900;color:#0F172A;font-variant-numeric:tabular-nums}
+.match-val{font-size:16px;font-weight:900}
+.brand-bar{height:5px;border-radius:5px;background:#F1F5F9;overflow:hidden;margin-bottom:14px}
+.brand-bar-fill{height:100%;border-radius:5px;transition:width .5s ease}
+.brand-btn{width:100%;padding:11px;border-radius:11px;font-size:13px;font-weight:800;color:#fff;background:linear-gradient(135deg,#2563EB,#6D4AFF);border:none;cursor:pointer;font-family:inherit;transition:all .12s}
+.brand-btn:hover{opacity:.9;transform:translateY(-1px)}
+
+/* ── REVENUE ── */
+.rev-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
+.rev-val{font-size:28px;font-weight:900;color:#0F172A;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.rev-change{font-size:13px;font-weight:700;color:#10B981;display:flex;align-items:center;gap:5px;margin-top:5px}
+.rev-change i{font-size:14px}
+.rev-link{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#2563EB;background:none;border:none;cursor:pointer;font-family:inherit;padding:8px 12px;border-radius:9px;transition:background .12s}
+.rev-link:hover{background:#EFF6FF}
+.rev-link i{font-size:14px}
+.bar-chart{display:flex;align-items:flex-end;gap:10px;height:90px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.bar{width:100%;border-radius:6px 6px 0 0;transition:height .5s ease}
+.bar-lbl{font-size:11px;font-weight:700;color:#94A3B8}
+.bar-lbl-active{color:#2563EB;font-weight:800}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .ai-cards{grid-template-columns:1fr 1fr}
+  .three-col{grid-template-columns:1fr}
+  .brands-grid{grid-template-columns:1fr 1fr}
+  .content{padding:20px 18px 100px}
+  .hero-greeting{font-size:22px}
+  .hero-sub{font-size:13px}
+}
+@media(max-width:480px){
+  .kpi-grid{grid-template-columns:1fr}
+  .ai-cards{grid-template-columns:1fr}
+  .brands-grid{grid-template-columns:1fr}
+}
+
+/* ── ICON SYSTEM (inline SVG) ── */
+.ico{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;vertical-align:middle;line-height:1}
+.ico svg{display:block}
+.nav-item .ico svg{width:20px;height:20px}
+.nav-item .ico{color:#94A3B8}
+.nav-item.active .ico{color:#2563EB}
+.nav-item:hover .ico{color:#0F172A}
+.icon-btn .ico svg{width:20px;height:20px}
+.btn .ico svg{width:16px;height:16px}
+.kpi-icon .ico svg{width:22px;height:22px}
+.kpi-icon .ico{color:#fff}
+.net-kpi-icon .ico svg{width:20px;height:20px}
+.ai-icon-box .ico svg{width:20px;height:20px}
+.ai-open-btn .ico svg{width:15px;height:15px}
+.ai-card-btn .ico svg{width:14px;height:14px}
+.ai-status-badge .ico svg{width:13px;height:13px}
+.tl-dot .ico svg{width:20px;height:20px}
+.qa-icon .ico svg{width:20px;height:20px}
+.ccard-ai-icon .ico svg{width:14px;height:14px}
+.ccard-ai-icon .ico{color:#fff}
+.ccard-contact-row .ico svg{width:15px;height:15px}
+.ccard-contact-row .ico{color:#94A3B8;flex-shrink:0;width:18px}
+.ccard-city .ico svg{width:13px;height:13px}
+.ccard-btn .ico svg{width:14px;height:14px}
+.kpi-change .ico svg{width:13px;height:13px}
+.rev-change .ico svg{width:15px;height:15px}
+.rev-link .ico svg{width:14px;height:14px}
+.brands-view-btn .ico svg{width:13px;height:13px}
+.net-search-wrap .ico svg{width:17px;height:17px}
+.bn-icon svg{width:22px;height:22px;display:block}
+.bn-icon{display:flex;align-items:center;justify-content:center}
+.bn-item.active .bn-icon svg{stroke:#2563EB}
+.bn-item.ai .bn-icon svg{stroke:#6D4AFF}
+.bn-item .bn-icon svg{stroke:#94A3B8}
+.quick-create-btn .ico svg{width:16px;height:16px}
+.quick-create-btn .ico{color:#fff}
+.search .ico svg{width:17px;height:17px}
+.search .ico{color:#94A3B8;flex-shrink:0}
+.qa-chev svg,.ico.qa-chev svg{width:16px;height:16px}
+
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:68px;background:rgba(255,255,255,.97);border-top:1px solid #E2E8F0;z-index:50;align-items:center;padding:0 8px;backdrop-filter:blur(8px)}
+@media(max-width:900px){.bottom-nav{display:flex}}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;padding:6px}
+.bn-icon-wrap{width:44px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;transition:background .12s}
+.bn-item.active .bn-icon-wrap{background:#EFF6FF}
+.bn-item.ai .bn-icon-wrap{background:linear-gradient(135deg,rgba(37,99,235,.1),rgba(109,74,255,.1))}
+.bn-icon{font-size:22px;color:#94A3B8}
+.bn-item.active .bn-icon{color:#2563EB}
+.bn-item.ai .bn-icon{color:#6D4AFF}
+.bn-lbl{font-size:11px;font-weight:600;color:#94A3B8}
+.bn-item.active .bn-lbl{color:#2563EB;font-weight:700}
+.bn-item.ai .bn-lbl{color:#6D4AFF}
+.bn-pip{position:relative}
+.bn-pip::after{content:'';position:absolute;top:-2px;right:-2px;width:8px;height:8px;border-radius:50%;background:#2563EB;border:2px solid #fff}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M6 6h10a7 7 0 0 1 0 14H6V6Z" fill="white" fill-opacity=".95"/><path d="M6 21h12a5 5 0 0 1 0 10H6V21Z" fill="white" fill-opacity=".4"/></svg>
+      </div>
+      <div><div class="sb-name">CreatorBooks</div><div class="sb-sub">Business OS</div></div>
+    </div>
+    <div class="sb-nav">
+      <div class="nav-item active" id="nav-home" onclick="showPage('home')"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Home</div>
+      <div class="nav-item" id="nav-network" onclick="showPage('network')"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Network</div>
+      <div class="nav-item" id="nav-opportunities"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>Opportunities <span class="nav-badge">3</span></div>
+      <div class="nav-item" id="nav-tasks"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span>Tasks <span class="nav-badge">4</span></div>
+      <div class="nav-item" id="nav-revenue"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg></span>Revenue</div>
+      <div class="nav-item" id="nav-content"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Content Studio</div>
+      <div class="nav-item" id="nav-ai"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/><path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75z"/></svg></span>AI Assistant <span class="nav-new">NEW</span></div>
+      <div class="nav-divider"></div>
+      <div class="nav-item" id="nav-settings"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>Settings</div>
+    </div>
+    <div class="sb-user">
+      <div class="avatar">VK</div>
+      <div><div class="sb-user-name">Vasu</div><div class="sb-user-email">vasu@creatorbooks.io</div></div>
+      <div class="plan-tag">Pro</div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="search">
+        <span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input placeholder="Search contacts, deals, tasks…">
+      </div>
+      <div class="hdr-right">
+        <button class="btn btn-secondary"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>Create</button>
+        <button class="icon-btn" aria-label="Notifications">
+          <span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+          <div class="notif-pip"></div>
+        </button>
+        <div class="hdr-avatar">VK</div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content" style="flex:1;display:flex;flex-direction:column;overflow:hidden;padding:0">
+      <div id="page-home" style="padding:28px 28px 60px;overflow-y:auto;flex:1">
+
+      <!-- SECTION 1: HERO -->
+      <div class="hero sec">
+        <div>
+          <div class="lbl">Dashboard</div>
+          <div class="hero-greeting">Good Afternoon, Vasu</div>
+          <div class="hero-sub">
+            Welcome back to <strong>CreatorBooks</strong>.
+            Track opportunities, revenue, content and growth from one place.
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button class="icon-btn" aria-label="Notifications">
+            <span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+            <div class="notif-pip"></div>
+          </button>
+          <button class="quick-create-btn">
+            <span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
+            Quick Create
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION 2: KPI CARDS -->
+      <div class="kpi-grid sec">
+
+        <div class="kpi kpi-blue">
+          <div class="kpi-circle"></div>
+          <div class="kpi-icon"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg></span></div>
+          <div class="kpi-lbl">Revenue This Month</div>
+          <div class="kpi-val">₹1,42,000</div>
+          <div class="kpi-sub">Feb 2024</div>
+          <div class="kpi-change ch-up-w"><span class="ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span> +18% vs last month</div>
+        </div>
+
+        <div class="kpi kpi-amber">
+          <div class="kpi-circle"></div>
+          <div class="kpi-icon"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span></div>
+          <div class="kpi-lbl">Pending Payments</div>
+          <div class="kpi-val">₹82,000</div>
+          <div class="kpi-sub">Requires action</div>
+          <div class="kpi-change ch-down-w"><span class="ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span> 3 invoices due</div>
+        </div>
+
+        <div class="kpi kpi-purple">
+          <div class="kpi-circle"></div>
+          <div class="kpi-icon"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span></div>
+          <div class="kpi-lbl">Active Opportunities</div>
+          <div class="kpi-val">12</div>
+          <div class="kpi-sub">₹28.4L pipeline</div>
+          <div class="kpi-change ch-up-w"><span class="ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span> +3 this week</div>
+        </div>
+
+        <div class="kpi kpi-light">
+          <div class="kpi-icon" style="background:#FEF3C7"><span class="ico" style="color:#D97706"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span></div>
+          <div class="kpi-lbl">Tasks Due Today</div>
+          <div class="kpi-val">4</div>
+          <div class="kpi-sub">2 high priority</div>
+          <div class="kpi-change ch-down"><span class="ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg></span> 1 overdue</div>
+        </div>
+
+        <div class="kpi kpi-green">
+          <div class="kpi-circle"></div>
+          <div class="kpi-icon"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span></div>
+          <div class="kpi-lbl">Upcoming Shoots</div>
+          <div class="kpi-val">3</div>
+          <div class="kpi-sub">This week</div>
+          <div class="kpi-change ch-flat-w"><span class="ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></span> Next: Tomorrow</div>
+        </div>
+
+        <div class="kpi kpi-light">
+          <div class="kpi-icon" style="background:#F5F3FF"><span class="ico" style="color:#6D4AFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span></div>
+          <div class="kpi-lbl">Open Casting Calls</div>
+          <div class="kpi-val">7</div>
+          <div class="kpi-sub">3 high match</div>
+          <div class="kpi-change ch-up"><span class="ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span> +2 new today</div>
+        </div>
+
+      </div>
+
+      <!-- SECTION 3: AI OPPORTUNITIES -->
+      <div class="ai-panel sec">
+        <div class="ai-hdr">
+          <div class="ai-hdr-left">
+            <div class="ai-icon-box"><span class="ico" style="color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/><path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75z"/></svg></span></div>
+            <div>
+              <div class="ai-hdr-title">AI Opportunities</div>
+              <div class="ai-hdr-sub">Matched for you right now · Updated live</div>
+            </div>
+          </div>
+          <button class="ai-open-btn"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/><path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75z"/></svg></span> Open AI <span class="ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></button>
+        </div>
+        <div class="ai-cards">
+
+          <div class="ai-card">
+            <div class="ai-match-row">
+              <div>
+                <div class="ai-match-pct" style="color:#34D399">92%</div>
+                <div class="ai-match-label" style="color:#34D399">Match Score</div>
+              </div>
+              <div class="ai-bar-wrap"><div class="ai-bar-fill" style="width:92%;background:#10B981"></div></div>
+            </div>
+            <span class="ai-status-badge" style="background:rgba(16,185,129,.15);color:#34D399;border-color:rgba(16,185,129,.3)"><span class="ico" style="margin-right:4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>High Match</span>
+            <div class="ai-card-title">Nike Campaign Match</div>
+            <div class="ai-card-sub">Sports & Fitness Category · Q1 2024</div>
+            <span class="ai-value">₹50,000</span>
+            <div class="ai-value-lbl">Opportunity value</div>
+            <button class="ai-card-btn"><span class="ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span> View Opportunity</button>
+          </div>
+
+          <div class="ai-card">
+            <div class="ai-match-row">
+              <div>
+                <div class="ai-match-pct" style="color:#60A5FA">76%</div>
+                <div class="ai-match-label" style="color:#60A5FA">Win Probability</div>
+              </div>
+              <div class="ai-bar-wrap"><div class="ai-bar-fill" style="width:76%;background:#2563EB"></div></div>
+            </div>
+            <span class="ai-status-badge" style="background:rgba(37,99,235,.2);color:#60A5FA;border-color:rgba(37,99,235,.3)"><span class="ico" style="margin-right:4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg></span>High Priority</span>
+            <div class="ai-card-title">Samsung Creator Partnership</div>
+            <div class="ai-card-sub">Tech Creator Program · Long-term Deal</div>
+            <span class="ai-value">₹75,000</span>
+            <div class="ai-value-lbl">Opportunity value</div>
+            <button class="ai-card-btn"><span class="ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span> View Opportunity</button>
+          </div>
+
+          <div class="ai-card">
+            <div class="ai-match-row">
+              <div>
+                <div class="ai-match-pct" style="color:#FCD34D">95%</div>
+                <div class="ai-match-label" style="color:#FCD34D">Recovery Rate</div>
+              </div>
+              <div class="ai-bar-wrap"><div class="ai-bar-fill" style="width:95%;background:#F59E0B"></div></div>
+            </div>
+            <span class="ai-status-badge" style="background:rgba(245,158,11,.15);color:#FCD34D;border-color:rgba(245,158,11,.3)"><span class="ico" style="margin-right:4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l3-2 2 2 2-2 2 2 2-2 3 2V2l-3 2-2-2-2 2-2-2-2 2z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg></span>Follow Up</span>
+            <div class="ai-card-title">3 Unpaid Invoices</div>
+            <div class="ai-card-sub">Zomato · Adidas · MediaHouse</div>
+            <span class="ai-value">₹82,000</span>
+            <div class="ai-value-lbl">Pending recovery</div>
+            <button class="ai-card-btn"><span class="ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span> View Invoices</button>
+          </div>
+
+          <div class="ai-card">
+            <div class="ai-match-row">
+              <div>
+                <div class="ai-match-pct" style="color:#F87171">68%</div>
+                <div class="ai-match-label" style="color:#F87171">Match Score</div>
+              </div>
+              <div class="ai-bar-wrap"><div class="ai-bar-fill" style="width:68%;background:#EF4444"></div></div>
+            </div>
+            <span class="ai-status-badge" style="background:rgba(239,68,68,.15);color:#F87171;border-color:rgba(239,68,68,.3)"><span class="ico" style="margin-right:4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>Act Now</span>
+            <div class="ai-card-title">Casting Director Viewed</div>
+            <div class="ai-card-sub">T-Series Productions · Yesterday</div>
+            <span class="ai-value">₹1,50,000</span>
+            <div class="ai-value-lbl">Opportunity value</div>
+            <button class="ai-card-btn"><span class="ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span> View Profile</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTIONS 4 + 6 + 7: 3-col -->
+      <div class="three-col sec">
+
+        <!-- SECTION 4: TODAY'S TIMELINE -->
+        <div class="card">
+          <div class="tl-hdr">
+            <span class="tl-hdr-lbl">Today's Schedule</span>
+            <span class="tl-count">4 events</span>
+          </div>
+          <div class="tl-body-wrap">
+            <div class="tl-item">
+              <div class="tl-spine">
+                <div class="tl-dot" style="background:#EFF6FF"><span class="ico" style="color:#2563EB"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span></div>
+                <div class="tl-line"></div>
+              </div>
+              <div class="tl-info">
+                <div class="tl-time">10:00 AM</div>
+                <div class="tl-title">Brand Call</div>
+                <div class="tl-sub">Nike Campaign Review</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-spine">
+                <div class="tl-dot" style="background:#ECFDF5"><span class="ico" style="color:#10B981"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span></div>
+                <div class="tl-line"></div>
+              </div>
+              <div class="tl-info">
+                <div class="tl-time">1:00 PM</div>
+                <div class="tl-title">Instagram Shoot</div>
+                <div class="tl-sub">Adidas Summer Reel</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-spine">
+                <div class="tl-dot" style="background:#FFFBEB"><span class="ico" style="color:#F59E0B"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l3-2 2 2 2-2 2 2 2-2 3 2V2l-3 2-2-2-2 2-2-2-2 2z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg></span></div>
+                <div class="tl-line"></div>
+              </div>
+              <div class="tl-info">
+                <div class="tl-time">4:00 PM</div>
+                <div class="tl-title">Invoice Follow-up</div>
+                <div class="tl-sub">Zomato — ₹30,000 overdue</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-spine">
+                <div class="tl-dot" style="background:#F5F3FF"><span class="ico" style="color:#6D4AFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></span></div>
+              </div>
+              <div class="tl-info" style="padding-bottom:0">
+                <div class="tl-time">6:00 PM</div>
+                <div class="tl-title">Publish Reel</div>
+                <div class="tl-sub">Samsung Galaxy S25 Review</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 6: QUICK ACTIONS -->
+        <div class="card card-p">
+          <div class="lbl" style="margin-bottom:12px">Quick Actions</div>
+          <div class="qa-item">
+            <div class="qa-icon" style="background:#EFF6FF"><span class="ico" style="color:#2563EB"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></span></div>
+            <span class="qa-label">Add Contact</span>
+            <span class="ico" style="color:#CBD5E1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="qa-item">
+            <div class="qa-icon" style="background:#F5F3FF"><span class="ico" style="color:#6D4AFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span></div>
+            <span class="qa-label">Add Opportunity</span>
+            <span class="ico" style="color:#CBD5E1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="qa-item">
+            <div class="qa-icon" style="background:#ECFDF5"><span class="ico" style="color:#10B981"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l3-2 2 2 2-2 2 2 2-2 3 2V2l-3 2-2-2-2 2-2-2-2 2z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg></span></div>
+            <span class="qa-label">Create Invoice</span>
+            <span class="ico" style="color:#CBD5E1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="qa-item">
+            <div class="qa-icon" style="background:#FFFBEB"><span class="ico" style="color:#F59E0B"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></span></div>
+            <span class="qa-label">Add Task</span>
+            <span class="ico" style="color:#CBD5E1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="qa-item qa-dark">
+            <div class="qa-icon" style="background:rgba(109,74,255,.18)"><span class="ico" style="color:#A78BFA"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/><path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75z"/></svg></span></div>
+            <span class="qa-label qa-label-dark">Ask AI</span>
+            <span class="ico" style="color:#6D4AFF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+        </div>
+
+        <!-- SECTION 7: RECENT ACTIVITY -->
+        <div class="card">
+          <div class="act-hdr">
+            <span class="act-hdr-lbl">Recent Activity</span>
+            <button class="act-view-btn">View all</button>
+          </div>
+          <div class="act-item">
+            <div class="act-dot" style="background:#2563EB"></div>
+            <div style="flex:1">
+              <div class="act-name">New Opportunity Created</div>
+              <div class="act-sub">Nike × Fitness Campaign · ₹50,000</div>
+            </div>
+            <div class="act-time">5m ago</div>
+          </div>
+          <div class="act-item">
+            <div class="act-dot" style="background:#2563EB"></div>
+            <div style="flex:1">
+              <div class="act-name">Invoice Sent</div>
+              <div class="act-sub">Invoice #1049 → Zomato · ₹30,000</div>
+            </div>
+            <div class="act-time">1h ago</div>
+          </div>
+          <div class="act-item">
+            <div class="act-dot" style="background:#10B981"></div>
+            <div style="flex:1">
+              <div class="act-name">Task Completed</div>
+              <div class="act-sub">Record Samsung unboxing reel</div>
+            </div>
+            <div class="act-time">2h ago</div>
+          </div>
+          <div class="act-item">
+            <div class="act-dot" style="background:#2563EB"></div>
+            <div style="flex:1">
+              <div class="act-name">New Contact Added</div>
+              <div class="act-sub">Casting Director · T-Series Films</div>
+            </div>
+            <div class="act-time">4h ago</div>
+          </div>
+          <div class="act-item">
+            <div class="act-dot" style="background:#10B981"></div>
+            <div style="flex:1">
+              <div class="act-name">Payment Received</div>
+              <div class="act-sub">Adidas paid ₹60,000 · Invoice #1046</div>
+            </div>
+            <div class="act-time">6h ago</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SECTION 5: BRANDS THAT WANT YOU -->
+      <div class="sec">
+        <div class="brands-hdr">
+          <div class="brands-hdr-left">
+            <div class="lbl">Brands That Want You</div>
+            <div class="brands-hdr-desc">Matched to your profile · Updated today</div>
+          </div>
+          <button class="brands-view-btn">View all <span class="ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></button>
+        </div>
+        <div class="brands-grid">
+
+          <div class="brand-card">
+            <div class="brand-hdr">
+              <div class="brand-logo" style="background:#111">N</div>
+              <div><div class="brand-name">Nike</div><div class="brand-type">Brand Sponsorship</div></div>
+            </div>
+            <div class="brand-stats">
+              <div><div class="stat-label">Budget</div><div class="stat-val">₹50,000</div></div>
+              <div style="text-align:right"><div class="stat-label">Match</div><div class="match-val" style="color:#10B981">92%</div></div>
+            </div>
+            <div class="brand-bar"><div class="brand-bar-fill" style="width:92%;background:#10B981"></div></div>
+            <button class="brand-btn">View Opportunity</button>
+          </div>
+
+          <div class="brand-card">
+            <div class="brand-hdr">
+              <div class="brand-logo" style="background:#1428A0">S</div>
+              <div><div class="brand-name">Samsung</div><div class="brand-type">Creator Partnership</div></div>
+            </div>
+            <div class="brand-stats">
+              <div><div class="stat-label">Budget</div><div class="stat-val">₹75,000</div></div>
+              <div style="text-align:right"><div class="stat-label">Match</div><div class="match-val" style="color:#2563EB">87%</div></div>
+            </div>
+            <div class="brand-bar"><div class="brand-bar-fill" style="width:87%;background:#2563EB"></div></div>
+            <button class="brand-btn">View Opportunity</button>
+          </div>
+
+          <div class="brand-card">
+            <div class="brand-hdr">
+              <div class="brand-logo" style="background:#E23744">Z</div>
+              <div><div class="brand-name">Zomato</div><div class="brand-type">Campaign Post</div></div>
+            </div>
+            <div class="brand-stats">
+              <div><div class="stat-label">Budget</div><div class="stat-val">₹30,000</div></div>
+              <div style="text-align:right"><div class="stat-label">Match</div><div class="match-val" style="color:#F59E0B">79%</div></div>
+            </div>
+            <div class="brand-bar"><div class="brand-bar-fill" style="width:79%;background:#F59E0B"></div></div>
+            <button class="brand-btn">View Opportunity</button>
+          </div>
+
+          <div class="brand-card">
+            <div class="brand-hdr">
+              <div class="brand-logo" style="background:#222">A</div>
+              <div><div class="brand-name">Adidas</div><div class="brand-type">Long-term Deal</div></div>
+            </div>
+            <div class="brand-stats">
+              <div><div class="stat-label">Budget</div><div class="stat-val">₹60,000</div></div>
+              <div style="text-align:right"><div class="stat-label">Match</div><div class="match-val" style="color:#2563EB">84%</div></div>
+            </div>
+            <div class="brand-bar"><div class="brand-bar-fill" style="width:84%;background:#2563EB"></div></div>
+            <button class="brand-btn">View Opportunity</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- REVENUE TREND -->
+      <div class="card card-p sec">
+        <div class="rev-hdr">
+          <div>
+            <div class="lbl">Revenue Trend</div>
+            <div class="rev-val">₹1,42,000</div>
+            <div class="rev-change"><span class="ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span> +18% vs last month</div>
+          </div>
+          <button class="rev-link">View Revenue <span class="ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></button>
+        </div>
+        <div class="bar-chart">
+          <div class="bar-col">
+            <div class="bar" style="height:52%;background:#E2E8F0"></div>
+            <div class="bar-lbl">Sep</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar" style="height:61%;background:#E2E8F0"></div>
+            <div class="bar-lbl">Oct</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar" style="height:68%;background:#E2E8F0"></div>
+            <div class="bar-lbl">Nov</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar" style="height:83%;background:#E2E8F0"></div>
+            <div class="bar-lbl">Dec</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar" style="height:71%;background:#E2E8F0"></div>
+            <div class="bar-lbl">Jan</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar" style="height:76%;background:linear-gradient(180deg,#2563EB,#6D4AFF)"></div>
+            <div class="bar-lbl bar-lbl-active">Feb</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /page-home -->
+
+    <!-- ═══════════════════════════════════════════
+         NETWORK CRM PAGE
+         ═══════════════════════════════════════════ -->
+    <div id="page-network" style="display:none">
+
+      <!-- NETWORK HERO -->
+      <div class="net-hero">
+        <div>
+          <div class="lbl">CRM</div>
+          <div class="hero-greeting" style="font-size:22px">Your Network</div>
+          <div class="hero-sub" style="margin-top:4px">Brands, creators, talent and agencies — all in one place.</div>
+        </div>
+        <div class="hero-actions">
+          <button class="quick-create-btn" style="font-size:11px">
+            <span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></span>
+            Add Contact
+          </button>
+        </div>
+      </div>
+
+      <!-- CONTACT KPI CARDS -->
+      <div class="net-kpi-grid">
+        <div class="net-kpi net-kpi-blue">
+          <div class="net-kpi-icon" style="background:rgba(255,255,255,.18)"><span class="ico" style="color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span></div>
+          <div class="net-kpi-val">248</div>
+          <div class="net-kpi-lbl">Total Contacts</div>
+          <div class="net-kpi-sub">+14 this month</div>
+        </div>
+        <div class="net-kpi net-kpi-purple">
+          <div class="net-kpi-icon" style="background:rgba(255,255,255,.18)"><span class="ico" style="color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span></div>
+          <div class="net-kpi-val">86</div>
+          <div class="net-kpi-lbl">Creators</div>
+          <div class="net-kpi-sub">Fitness · Tech · Travel</div>
+        </div>
+        <div class="net-kpi net-kpi-green">
+          <div class="net-kpi-icon" style="background:rgba(255,255,255,.18)"><span class="ico" style="color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span></div>
+          <div class="net-kpi-val">42</div>
+          <div class="net-kpi-lbl">Brands</div>
+          <div class="net-kpi-sub">Active partnerships</div>
+        </div>
+        <div class="net-kpi net-kpi-amber">
+          <div class="net-kpi-icon" style="background:rgba(255,255,255,.18)"><span class="ico" style="color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span></div>
+          <div class="net-kpi-val">18</div>
+          <div class="net-kpi-lbl">Agencies</div>
+          <div class="net-kpi-sub">Talent & Production</div>
+        </div>
+        <div class="net-kpi net-kpi-light">
+          <div class="net-kpi-icon" style="background:#F5F3FF"><span class="ico" style="color:#6D4AFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg></span></div>
+          <div class="net-kpi-val" style="color:#0F172A">22</div>
+          <div class="net-kpi-lbl" style="color:#94A3B8">Actors</div>
+          <div class="net-kpi-sub" style="color:#94A3B8">Film & OTT</div>
+        </div>
+      </div>
+
+      <!-- SEARCH + FILTERS ROW -->
+      <div class="net-search-row">
+        <div class="net-search-wrap">
+          <span class="ico" style="color:#94A3B8;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+          <input id="net-search-input" class="net-search-input" placeholder="Search by name, brand, category, city…" oninput="filterContacts()">
+          <button class="net-search-clear" onclick="clearSearch()" id="net-clear-btn" style="display:none">
+            <span class="ico" style="color:#94A3B8"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+          </button>
+        </div>
+        <div class="net-filter-scroll" id="net-filters">
+          <button class="net-filter-btn active" data-filter="all" onclick="setFilter('all',this)">All</button>
+          <button class="net-filter-btn" data-filter="creator" onclick="setFilter('creator',this)">Creator</button>
+          <button class="net-filter-btn" data-filter="influencer" onclick="setFilter('influencer',this)">Influencer</button>
+          <button class="net-filter-btn" data-filter="actor" onclick="setFilter('actor',this)">Actor</button>
+          <button class="net-filter-btn" data-filter="brand" onclick="setFilter('brand',this)">Brand</button>
+          <button class="net-filter-btn" data-filter="agency" onclick="setFilter('agency',this)">Agency</button>
+          <button class="net-filter-btn" data-filter="manager" onclick="setFilter('manager',this)">Manager</button>
+          <button class="net-filter-btn" data-filter="producer" onclick="setFilter('producer',this)">Producer</button>
+        </div>
+      </div>
+
+      <!-- CONTACTS GRID -->
+      <div class="net-grid" id="net-contacts-grid">
+
+        <!-- CARD 1: Vasu Dev -->
+        <div class="ccard" data-type="creator" data-name="Vasu Dev" data-city="Mumbai" data-category="Fitness">
+          <div class="ccard-top">
+            <div class="ccard-avatar" style="background:linear-gradient(135deg,#2563EB,#6D4AFF)">VD</div>
+            <div class="ccard-meta">
+              <div class="ccard-name">Vasu Dev</div>
+              <div class="ccard-type-row">
+                <span class="ccard-type-badge" style="background:#EFF6FF;color:#1D4ED8;border-color:#BFDBFE">Fitness Creator</span>
+                <span class="ccard-city"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Mumbai</span>
+              </div>
+            </div>
+            <span class="ccard-status-badge" style="background:#ECFDF5;color:#065F46;border-color:#A7F3D0">High Match</span>
+          </div>
+          <div class="ccard-divider"></div>
+          <div class="ccard-stats">
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Followers</div>
+              <div class="cstat-val">1.2M</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Category</div>
+              <div class="cstat-val">Fitness</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Match</div>
+              <div class="cstat-val" style="color:#10B981">92%</div>
+            </div>
+          </div>
+          <div class="ccard-contact">
+            <div class="ccard-contact-row"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span><span>vasu@creatorbooks.io</span></div>
+            <div class="ccard-contact-row"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span>+91 98100 00001</span></div>
+          </div>
+          <div class="ccard-ai">
+            <div class="ccard-ai-icon"><span class="ico" style="color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/><path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75z"/></svg></span></div>
+            <div class="ccard-ai-body">
+              <div class="ccard-ai-label">AI Suggestion</div>
+              <div class="ccard-ai-opp">Nike Fitness Campaign — ₹50,000</div>
+              <div class="ccard-ai-action">Send proposal this week · High priority</div>
+            </div>
+          </div>
+          <div class="ccard-rel-section">
+            <div class="crel-header">
+              <span class="crel-title">Relationship Strength</span>
+              <span class="crel-badge" style="background:#ECFDF5;color:#065F46;border-color:#A7F3D0">Hot</span>
+            </div>
+            <div class="crel-track">
+              <div class="crel-seg" style="background:#EF4444"></div>
+              <div class="crel-seg" style="background:#F59E0B"></div>
+              <div class="crel-seg" style="background:#10B981"></div>
+            </div>
+          </div>
+          <div class="ccard-actions">
+            <button class="ccard-btn ccard-btn-view"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>View</button>
+            <button class="ccard-btn ccard-btn-edit"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Edit</button>
+            <button class="ccard-btn ccard-btn-msg"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Message</button>
+          </div>
+        </div>
+
+        <!-- CARD 2: Rahul Sharma -->
+        <div class="ccard" data-type="creator" data-name="Rahul Sharma" data-city="Bengaluru" data-category="Tech">
+          <div class="ccard-top">
+            <div class="ccard-avatar" style="background:linear-gradient(135deg,#6D4AFF,#4F46E5)">RS</div>
+            <div class="ccard-meta">
+              <div class="ccard-name">Rahul Sharma</div>
+              <div class="ccard-type-row">
+                <span class="ccard-type-badge" style="background:#F5F3FF;color:#5B21B6;border-color:#DDD6FE">Tech Creator</span>
+                <span class="ccard-city"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Bengaluru</span>
+              </div>
+            </div>
+            <span class="ccard-status-badge" style="background:#FFF7ED;color:#9A3412;border-color:#FED7AA">Warm Lead</span>
+          </div>
+          <div class="ccard-divider"></div>
+          <div class="ccard-stats">
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Followers</div>
+              <div class="cstat-val">890K</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Category</div>
+              <div class="cstat-val">Tech</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Match</div>
+              <div class="cstat-val" style="color:#2563EB">87%</div>
+            </div>
+          </div>
+          <div class="ccard-contact">
+            <div class="ccard-contact-row"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span><span>rahul@techcreator.in</span></div>
+            <div class="ccard-contact-row"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span>+91 98200 00002</span></div>
+          </div>
+          <div class="ccard-ai">
+            <div class="ccard-ai-icon"><span class="ico" style="color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/><path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75z"/></svg></span></div>
+            <div class="ccard-ai-body">
+              <div class="ccard-ai-label">AI Suggestion</div>
+              <div class="ccard-ai-opp">Samsung Galaxy S25 Deal — ₹75,000</div>
+              <div class="ccard-ai-action">Follow up on proposal · 3 days left</div>
+            </div>
+          </div>
+          <div class="ccard-rel-section">
+            <div class="crel-header">
+              <span class="crel-title">Relationship Strength</span>
+              <span class="crel-badge" style="background:#FFF7ED;color:#9A3412;border-color:#FED7AA">Warm</span>
+            </div>
+            <div class="crel-track">
+              <div class="crel-seg" style="background:#EF4444"></div>
+              <div class="crel-seg" style="background:#F59E0B"></div>
+              <div class="crel-seg" style="background:#E2E8F0"></div>
+            </div>
+          </div>
+          <div class="ccard-actions">
+            <button class="ccard-btn ccard-btn-view"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>View</button>
+            <button class="ccard-btn ccard-btn-edit"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Edit</button>
+            <button class="ccard-btn ccard-btn-msg"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Message</button>
+          </div>
+        </div>
+
+        <!-- CARD 3: Priya Nair -->
+        <div class="ccard" data-type="influencer" data-name="Priya Nair" data-city="Goa" data-category="Travel">
+          <div class="ccard-top">
+            <div class="ccard-avatar" style="background:linear-gradient(135deg,#10B981,#059669)">PN</div>
+            <div class="ccard-meta">
+              <div class="ccard-name">Priya Nair</div>
+              <div class="ccard-type-row">
+                <span class="ccard-type-badge" style="background:#ECFDF5;color:#065F46;border-color:#A7F3D0">Travel Influencer</span>
+                <span class="ccard-city"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Goa</span>
+              </div>
+            </div>
+            <span class="ccard-status-badge" style="background:#ECFDF5;color:#065F46;border-color:#A7F3D0">High Match</span>
+          </div>
+          <div class="ccard-divider"></div>
+          <div class="ccard-stats">
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Followers</div>
+              <div class="cstat-val">2.1M</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Category</div>
+              <div class="cstat-val">Travel</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Match</div>
+              <div class="cstat-val" style="color:#10B981">78%</div>
+            </div>
+          </div>
+          <div class="ccard-contact">
+            <div class="ccard-contact-row"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span><span>priya@travelwithpriya.com</span></div>
+            <div class="ccard-contact-row"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span>+91 97300 00003</span></div>
+          </div>
+          <div class="ccard-ai">
+            <div class="ccard-ai-icon"><span class="ico" style="color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/><path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75z"/></svg></span></div>
+            <div class="ccard-ai-body">
+              <div class="ccard-ai-label">AI Suggestion</div>
+              <div class="ccard-ai-opp">Tourism Board Campaign — ₹45,000</div>
+              <div class="ccard-ai-action">Invite to collaborate on Goa reel</div>
+            </div>
+          </div>
+          <div class="ccard-rel-section">
+            <div class="crel-header">
+              <span class="crel-title">Relationship Strength</span>
+              <span class="crel-badge" style="background:#ECFDF5;color:#065F46;border-color:#A7F3D0">Hot</span>
+            </div>
+            <div class="crel-track">
+              <div class="crel-seg" style="background:#EF4444"></div>
+              <div class="crel-seg" style="background:#F59E0B"></div>
+              <div class="crel-seg" style="background:#10B981"></div>
+            </div>
+          </div>
+          <div class="ccard-actions">
+            <button class="ccard-btn ccard-btn-view"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>View</button>
+            <button class="ccard-btn ccard-btn-edit"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Edit</button>
+            <button class="ccard-btn ccard-btn-msg"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Message</button>
+          </div>
+        </div>
+
+        <!-- CARD 4: Nike India -->
+        <div class="ccard" data-type="brand" data-name="Nike India" data-city="Mumbai" data-category="Sportswear">
+          <div class="ccard-top">
+            <div class="ccard-avatar" style="background:#111;border-radius:14px;font-size:18px;font-weight:900">N</div>
+            <div class="ccard-meta">
+              <div class="ccard-name">Nike India</div>
+              <div class="ccard-type-row">
+                <span class="ccard-type-badge" style="background:#FEF3C7;color:#92400E;border-color:#FDE68A">Brand Partner</span>
+                <span class="ccard-city"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Mumbai</span>
+              </div>
+            </div>
+            <span class="ccard-status-badge" style="background:#EFF6FF;color:#1D4ED8;border-color:#BFDBFE">Active Deal</span>
+          </div>
+          <div class="ccard-divider"></div>
+          <div class="ccard-stats">
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Budget</div>
+              <div class="cstat-val">₹50K</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Sector</div>
+              <div class="cstat-val">Sports</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Deals</div>
+              <div class="cstat-val" style="color:#10B981">3</div>
+            </div>
+          </div>
+          <div class="ccard-contact">
+            <div class="ccard-contact-row"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span><span>partnerships@nike.in</span></div>
+            <div class="ccard-contact-row"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span>+91 22 6700 0004</span></div>
+          </div>
+          <div class="ccard-ai">
+            <div class="ccard-ai-icon"><span class="ico" style="color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/><path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75z"/></svg></span></div>
+            <div class="ccard-ai-body">
+              <div class="ccard-ai-label">AI Suggestion</div>
+              <div class="ccard-ai-opp">Q1 Campaign — Ready to sign</div>
+              <div class="ccard-ai-action">Send revised contract today</div>
+            </div>
+          </div>
+          <div class="ccard-rel-section">
+            <div class="crel-header">
+              <span class="crel-title">Relationship Strength</span>
+              <span class="crel-badge" style="background:#ECFDF5;color:#065F46;border-color:#A7F3D0">Hot</span>
+            </div>
+            <div class="crel-track">
+              <div class="crel-seg" style="background:#EF4444"></div>
+              <div class="crel-seg" style="background:#F59E0B"></div>
+              <div class="crel-seg" style="background:#10B981"></div>
+            </div>
+          </div>
+          <div class="ccard-actions">
+            <button class="ccard-btn ccard-btn-view"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>View</button>
+            <button class="ccard-btn ccard-btn-edit"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Edit</button>
+            <button class="ccard-btn ccard-btn-msg"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Message</button>
+          </div>
+        </div>
+
+        <!-- CARD 5: Samsung India -->
+        <div class="ccard" data-type="brand" data-name="Samsung India" data-city="Delhi" data-category="Technology">
+          <div class="ccard-top">
+            <div class="ccard-avatar" style="background:#1428A0;border-radius:14px;font-size:14px;font-weight:900">SI</div>
+            <div class="ccard-meta">
+              <div class="ccard-name">Samsung India</div>
+              <div class="ccard-type-row">
+                <span class="ccard-type-badge" style="background:#FEF3C7;color:#92400E;border-color:#FDE68A">Brand Partner</span>
+                <span class="ccard-city"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Delhi</span>
+              </div>
+            </div>
+            <span class="ccard-status-badge" style="background:#FFF7ED;color:#9A3412;border-color:#FED7AA">Warm Lead</span>
+          </div>
+          <div class="ccard-divider"></div>
+          <div class="ccard-stats">
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Budget</div>
+              <div class="cstat-val">₹75K</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Sector</div>
+              <div class="cstat-val">Tech</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Deals</div>
+              <div class="cstat-val" style="color:#2563EB">1</div>
+            </div>
+          </div>
+          <div class="ccard-contact">
+            <div class="ccard-contact-row"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span><span>creator@samsung.in</span></div>
+            <div class="ccard-contact-row"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span>+91 11 4560 0005</span></div>
+          </div>
+          <div class="ccard-ai">
+            <div class="ccard-ai-icon"><span class="ico" style="color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/><path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75z"/></svg></span></div>
+            <div class="ccard-ai-body">
+              <div class="ccard-ai-label">AI Suggestion</div>
+              <div class="ccard-ai-opp">Galaxy S25 Launch — ₹75,000</div>
+              <div class="ccard-ai-action">Proposal in review · Follow up Friday</div>
+            </div>
+          </div>
+          <div class="ccard-rel-section">
+            <div class="crel-header">
+              <span class="crel-title">Relationship Strength</span>
+              <span class="crel-badge" style="background:#FFF7ED;color:#9A3412;border-color:#FED7AA">Warm</span>
+            </div>
+            <div class="crel-track">
+              <div class="crel-seg" style="background:#EF4444"></div>
+              <div class="crel-seg" style="background:#F59E0B"></div>
+              <div class="crel-seg" style="background:#E2E8F0"></div>
+            </div>
+          </div>
+          <div class="ccard-actions">
+            <button class="ccard-btn ccard-btn-view"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>View</button>
+            <button class="ccard-btn ccard-btn-edit"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Edit</button>
+            <button class="ccard-btn ccard-btn-msg"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Message</button>
+          </div>
+        </div>
+
+        <!-- CARD 6: T-Series Films -->
+        <div class="ccard" data-type="producer" data-name="T-Series Films" data-city="Mumbai" data-category="Production">
+          <div class="ccard-top">
+            <div class="ccard-avatar" style="background:#E23744;border-radius:14px;font-size:14px;font-weight:900">TS</div>
+            <div class="ccard-meta">
+              <div class="ccard-name">T-Series Films</div>
+              <div class="ccard-type-row">
+                <span class="ccard-type-badge" style="background:#FEE2E2;color:#991B1B;border-color:#FECACA">Production House</span>
+                <span class="ccard-city"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Mumbai</span>
+              </div>
+            </div>
+            <span class="ccard-status-badge" style="background:#FFFBEB;color:#92400E;border-color:#FDE68A">Follow Up</span>
+          </div>
+          <div class="ccard-divider"></div>
+          <div class="ccard-stats">
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Budget</div>
+              <div class="cstat-val">₹1.5L</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Type</div>
+              <div class="cstat-val">Film</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Match</div>
+              <div class="cstat-val" style="color:#F59E0B">68%</div>
+            </div>
+          </div>
+          <div class="ccard-contact">
+            <div class="ccard-contact-row"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span><span>casting@tseries.net</span></div>
+            <div class="ccard-contact-row"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span>+91 22 6600 0006</span></div>
+          </div>
+          <div class="ccard-ai">
+            <div class="ccard-ai-icon"><span class="ico" style="color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/><path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75z"/></svg></span></div>
+            <div class="ccard-ai-body">
+              <div class="ccard-ai-label">AI Suggestion</div>
+              <div class="ccard-ai-opp">Bollywood Summer Film — Lead Role</div>
+              <div class="ccard-ai-action">Casting director viewed your profile</div>
+            </div>
+          </div>
+          <div class="ccard-rel-section">
+            <div class="crel-header">
+              <span class="crel-title">Relationship Strength</span>
+              <span class="crel-badge" style="background:#F8FAFC;color:#64748B;border-color:#E2E8F0">Cold</span>
+            </div>
+            <div class="crel-track">
+              <div class="crel-seg" style="background:#EF4444"></div>
+              <div class="crel-seg" style="background:#E2E8F0"></div>
+              <div class="crel-seg" style="background:#E2E8F0"></div>
+            </div>
+          </div>
+          <div class="ccard-actions">
+            <button class="ccard-btn ccard-btn-view"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>View</button>
+            <button class="ccard-btn ccard-btn-edit"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Edit</button>
+            <button class="ccard-btn ccard-btn-msg"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Message</button>
+          </div>
+        </div>
+
+        <!-- CARD 7: Ananya Kapoor -->
+        <div class="ccard" data-type="actor" data-name="Ananya Kapoor" data-city="Mumbai" data-category="Acting">
+          <div class="ccard-top">
+            <div class="ccard-avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706)">AK</div>
+            <div class="ccard-meta">
+              <div class="ccard-name">Ananya Kapoor</div>
+              <div class="ccard-type-row">
+                <span class="ccard-type-badge" style="background:#FEF3C7;color:#92400E;border-color:#FDE68A">Actor</span>
+                <span class="ccard-city"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Mumbai</span>
+              </div>
+            </div>
+            <span class="ccard-status-badge" style="background:#FFF7ED;color:#9A3412;border-color:#FED7AA">Warm Lead</span>
+          </div>
+          <div class="ccard-divider"></div>
+          <div class="ccard-stats">
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Followers</div>
+              <div class="cstat-val">5.4M</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Projects</div>
+              <div class="cstat-val">12</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Match</div>
+              <div class="cstat-val" style="color:#2563EB">84%</div>
+            </div>
+          </div>
+          <div class="ccard-contact">
+            <div class="ccard-contact-row"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span><span>ananya@starmgmt.in</span></div>
+            <div class="ccard-contact-row"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span>+91 98700 00007</span></div>
+          </div>
+          <div class="ccard-ai">
+            <div class="ccard-ai-icon"><span class="ico" style="color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/><path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75z"/></svg></span></div>
+            <div class="ccard-ai-body">
+              <div class="ccard-ai-label">AI Suggestion</div>
+              <div class="ccard-ai-opp">OTT Series Casting — ₹2,00,000</div>
+              <div class="ccard-ai-action">Collaborate on brand integration</div>
+            </div>
+          </div>
+          <div class="ccard-rel-section">
+            <div class="crel-header">
+              <span class="crel-title">Relationship Strength</span>
+              <span class="crel-badge" style="background:#FFF7ED;color:#9A3412;border-color:#FED7AA">Warm</span>
+            </div>
+            <div class="crel-track">
+              <div class="crel-seg" style="background:#EF4444"></div>
+              <div class="crel-seg" style="background:#F59E0B"></div>
+              <div class="crel-seg" style="background:#E2E8F0"></div>
+            </div>
+          </div>
+          <div class="ccard-actions">
+            <button class="ccard-btn ccard-btn-view"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>View</button>
+            <button class="ccard-btn ccard-btn-edit"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Edit</button>
+            <button class="ccard-btn ccard-btn-msg"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Message</button>
+          </div>
+        </div>
+
+        <!-- CARD 8: Zomato -->
+        <div class="ccard" data-type="brand" data-name="Zomato" data-city="Gurugram" data-category="Food">
+          <div class="ccard-top">
+            <div class="ccard-avatar" style="background:#E23744;border-radius:14px;font-size:20px;font-weight:900">Z</div>
+            <div class="ccard-meta">
+              <div class="ccard-name">Zomato</div>
+              <div class="ccard-type-row">
+                <span class="ccard-type-badge" style="background:#FEF3C7;color:#92400E;border-color:#FDE68A">Brand Partner</span>
+                <span class="ccard-city"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Gurugram</span>
+              </div>
+            </div>
+            <span class="ccard-status-badge" style="background:#FFFBEB;color:#92400E;border-color:#FDE68A">Follow Up</span>
+          </div>
+          <div class="ccard-divider"></div>
+          <div class="ccard-stats">
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Budget</div>
+              <div class="cstat-val">₹30K</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Sector</div>
+              <div class="cstat-val">Food</div>
+            </div>
+            <div class="ccard-stat-div"></div>
+            <div class="ccard-stat">
+              <div class="cstat-lbl">Deals</div>
+              <div class="cstat-val" style="color:#10B981">4</div>
+            </div>
+          </div>
+          <div class="ccard-contact">
+            <div class="ccard-contact-row"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span><span>influencer@zomato.com</span></div>
+            <div class="ccard-contact-row"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span>+91 124 402 0008</span></div>
+          </div>
+          <div class="ccard-ai">
+            <div class="ccard-ai-icon"><span class="ico" style="color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/><path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75z"/></svg></span></div>
+            <div class="ccard-ai-body">
+              <div class="ccard-ai-label">AI Suggestion</div>
+              <div class="ccard-ai-opp">Invoice #1049 Overdue — ₹30,000</div>
+              <div class="ccard-ai-action">Send payment reminder now</div>
+            </div>
+          </div>
+          <div class="ccard-rel-section">
+            <div class="crel-header">
+              <span class="crel-title">Relationship Strength</span>
+              <span class="crel-badge" style="background:#ECFDF5;color:#065F46;border-color:#A7F3D0">Hot</span>
+            </div>
+            <div class="crel-track">
+              <div class="crel-seg" style="background:#EF4444"></div>
+              <div class="crel-seg" style="background:#F59E0B"></div>
+              <div class="crel-seg" style="background:#10B981"></div>
+            </div>
+          </div>
+          <div class="ccard-actions">
+            <button class="ccard-btn ccard-btn-view"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>View</button>
+            <button class="ccard-btn ccard-btn-edit"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Edit</button>
+            <button class="ccard-btn ccard-btn-msg"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Message</button>
+          </div>
+        </div>
+
+      </div><!-- /net-contacts-grid -->
+
+      <!-- EMPTY STATE (shown when no results) -->
+      <div id="net-empty" style="display:none;padding:48px 24px;text-align:center">
+        <div style="width:52px;height:52px;border-radius:14px;background:#F1F5F9;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
+          <span class="ico" style="color:#94A3B8"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/><path d="M16 11a4 4 0 0 1-5.66 5.66"/></svg></span>
+        </div>
+        <div style="font-size:15px;font-weight:700;color:#0F172A;margin-bottom:6px">No contacts found</div>
+        <div style="font-size:12px;color:#64748B;margin-bottom:18px">Try a different search term or filter.</div>
+        <button onclick="clearSearch();setFilter('all',document.querySelector('.net-filter-btn'))" class="quick-create-btn" style="margin:0 auto;font-size:11px">Clear filters</button>
+      </div>
+
+    </div><!-- /page-network -->
+
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="bn-item active">
+    <div class="bn-icon-wrap"><span class="ico bn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span></div>
+    <span class="bn-lbl">Home</span>
+  </div>
+  <div class="bn-item">
+    <div class="bn-icon-wrap"><div class="bn-pip"><span class="ico bn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span></div></div>
+    <span class="bn-lbl">Network</span>
+  </div>
+  <div class="bn-item">
+    <div class="bn-icon-wrap"><span class="ico bn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg></span></div>
+    <span class="bn-lbl">Revenue</span>
+  </div>
+  <div class="bn-item ai">
+    <div class="bn-icon-wrap"><span class="ico bn-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/><path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75z"/></svg></span></div>
+    <span class="bn-lbl">AI</span>
+  </div>
+  <div class="bn-item">
+    <div class="bn-icon-wrap"><span class="ico bn-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></span></div>
+    <span class="bn-lbl">More</span>
+  </div>
+</nav>
+
+<style>
+/* ═══════════════════════════════════════
+   NETWORK PAGE — PREMIUM STYLES v2
+═══════════════════════════════════════ */
+
+/* Page layout */
+.net-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:32px 32px 0;margin-bottom:28px}
+#page-network{padding:0;overflow-y:auto;flex:1}
+#page-home{padding:0;overflow-y:auto;flex:1}
+
+/* KPI strip */
+.net-kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:0 32px 28px}
+.net-kpi{border-radius:14px;padding:20px 18px 18px;position:relative;overflow:hidden;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.net-kpi:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(15,23,42,.12)}
+.net-kpi-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.net-kpi-icon i{font-size:18px}
+.net-kpi-val{font-size:26px;font-weight:900;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.net-kpi-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-top:6px}
+.net-kpi-sub{font-size:11px;margin-top:4px;opacity:.6}
+.net-kpi-blue{background:linear-gradient(135deg,#2563EB,#4F46E5)}.net-kpi-blue .net-kpi-val,.net-kpi-blue .net-kpi-lbl,.net-kpi-blue .net-kpi-sub{color:#fff}
+.net-kpi-purple{background:linear-gradient(135deg,#6D4AFF,#4F46E5)}.net-kpi-purple .net-kpi-val,.net-kpi-purple .net-kpi-lbl,.net-kpi-purple .net-kpi-sub{color:#fff}
+.net-kpi-green{background:linear-gradient(135deg,#10B981,#059669)}.net-kpi-green .net-kpi-val,.net-kpi-green .net-kpi-lbl,.net-kpi-green .net-kpi-sub{color:#fff}
+.net-kpi-amber{background:linear-gradient(135deg,#F59E0B,#D97706)}.net-kpi-amber .net-kpi-val,.net-kpi-amber .net-kpi-lbl,.net-kpi-amber .net-kpi-sub{color:#fff}
+.net-kpi-light{background:#fff;border:1px solid #E2E8F0}
+.net-kpi-light .net-kpi-val{color:#0F172A}
+.net-kpi-light .net-kpi-lbl{color:#94A3B8}
+.net-kpi-light .net-kpi-sub{color:#94A3B8}
+
+/* Search + filter row */
+.net-search-row{display:flex;align-items:center;gap:14px;margin:0 32px 24px;flex-wrap:wrap}
+.net-search-wrap{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #E2E8F0;border-radius:12px;padding:0 14px;height:44px;flex:1;min-width:220px;max-width:400px;transition:border-color .15s,box-shadow .15s}
+.net-search-wrap:focus-within{border-color:#2563EB;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.net-search-wrap i{font-size:17px;color:#94A3B8;flex-shrink:0}
+.net-search-input{border:none;background:transparent;outline:none;font-size:13px;color:#0F172A;width:100%;font-family:inherit}
+.net-search-input::placeholder{color:#94A3B8}
+.net-search-clear{background:none;border:none;cursor:pointer;display:flex;align-items:center;padding:0;line-height:1}
+.net-filter-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;flex:1;align-items:center}
+.net-filter-scroll::-webkit-scrollbar{display:none}
+.net-filter-btn{flex-shrink:0;padding:8px 16px;border-radius:22px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid #E2E8F0;background:#fff;color:#64748B;font-family:inherit;transition:all .12s;line-height:1}
+.net-filter-btn:hover{background:#F1F5F9;color:#334155;border-color:#CBD5E1}
+.net-filter-btn.active{background:linear-gradient(135deg,#2563EB,#4F46E5);color:#fff;border-color:transparent;box-shadow:0 3px 10px rgba(37,99,235,.3)}
+
+/* Contacts grid */
+.net-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin:0 32px 40px}
+
+/* ── CONTACT CARD ── */
+.ccard{background:#fff;border:1.5px solid #E2E8F0;border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:16px;transition:transform .18s,box-shadow .18s,border-color .18s}
+.ccard:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(15,23,42,.1);border-color:#CBD5E1}
+.ccard.hidden{display:none}
+
+/* Top: avatar + name + status badge */
+.ccard-top{display:flex;align-items:flex-start;gap:14px}
+.ccard-avatar{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:800;flex-shrink:0;letter-spacing:-.02em}
+.ccard-meta{flex:1;min-width:0}
+.ccard-name{font-size:16px;font-weight:800;color:#0F172A;line-height:1.2;margin-bottom:5px}
+.ccard-type-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.ccard-type-badge{font-size:11px;font-weight:700;border-radius:6px;padding:3px 9px;border:1.5px solid;white-space:nowrap;letter-spacing:.01em}
+.ccard-city{font-size:11px;color:#94A3B8;display:flex;align-items:center;gap:4px;white-space:nowrap;font-weight:500}
+.ccard-city i{font-size:13px}
+/* Status badge top-right */
+.ccard-status-badge{flex-shrink:0;padding:5px 11px;border-radius:8px;font-size:11px;font-weight:800;border:1.5px solid;white-space:nowrap;letter-spacing:.02em;margin-top:2px}
+
+/* Divider */
+.ccard-divider{height:1px;background:#F1F5F9;margin:0 -4px}
+
+/* Stats row */
+.ccard-stats{display:flex;align-items:stretch;background:#F8FAFC;border-radius:12px;padding:14px 16px;gap:0}
+.ccard-stat{flex:1;text-align:center}
+.ccard-stat-div{width:1px;background:#E2E8F0;flex-shrink:0;margin:2px 0}
+.cstat-lbl{font-size:11px;color:#94A3B8;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.cstat-val{font-size:15px;font-weight:800;color:#0F172A;font-variant-numeric:tabular-nums;line-height:1.2}
+
+/* Contact info */
+.ccard-contact{display:flex;flex-direction:column;gap:8px}
+.ccard-contact-row{display:flex;align-items:center;gap:10px;font-size:13px;color:#475569;font-weight:500}
+.ccard-contact-row i{font-size:16px;color:#94A3B8;flex-shrink:0;width:18px}
+.ccard-contact-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* AI insight panel */
+.ccard-ai{display:flex;align-items:flex-start;gap:12px;padding:14px;border-radius:12px;background:#0B1020;border:1px solid #1E2A3B;position:relative;overflow:hidden}
+.ccard-ai::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0% 50%,rgba(37,99,235,.12) 0%,transparent 65%);pointer-events:none}
+.ccard-ai-icon{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#2563EB,#6D4AFF);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;position:relative;z-index:1}
+.ccard-ai-icon i{font-size:14px;color:#fff}
+.ccard-ai-body{flex:1;min-width:0;position:relative;z-index:1}
+.ccard-ai-label{font-size:10px;font-weight:700;color:#6D4AFF;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.ccard-ai-opp{font-size:13px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:4px}
+.ccard-ai-action{font-size:12px;color:#64748B;line-height:1.4;font-weight:500}
+
+/* Relationship strength */
+.ccard-rel-section{display:flex;flex-direction:column;gap:8px}
+.crel-header{display:flex;align-items:center;justify-content:space-between}
+.crel-title{font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.07em}
+.crel-badge{font-size:11px;font-weight:800;padding:4px 12px;border-radius:8px;border:1.5px solid;letter-spacing:.02em}
+.crel-track{display:flex;gap:5px;height:6px}
+.crel-seg{flex:1;border-radius:6px;height:100%}
+
+/* Action buttons */
+.ccard-actions{display:flex;gap:8px}
+.ccard-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 8px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1.5px solid;font-family:inherit;transition:all .15s;line-height:1}
+.ccard-btn i{font-size:15px}
+.ccard-btn-view{background:#EFF6FF;color:#1D4ED8;border-color:#BFDBFE}
+.ccard-btn-view:hover{background:#DBEAFE;border-color:#93C5FD;transform:translateY(-1px)}
+.ccard-btn-edit{background:#F8FAFC;color:#334155;border-color:#E2E8F0}
+.ccard-btn-edit:hover{background:#F1F5F9;border-color:#CBD5E1;transform:translateY(-1px)}
+.ccard-btn-msg{background:linear-gradient(135deg,#2563EB,#6D4AFF);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(37,99,235,.25)}
+.ccard-btn-msg:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 4px 14px rgba(37,99,235,.35)}
+
+/* Mobile */
+@media(max-width:900px){
+  .net-kpi-grid{grid-template-columns:repeat(3,1fr);margin:0 18px 20px}
+  .net-kpi:nth-child(4),.net-kpi:nth-child(5){display:none}
+  .net-search-row{margin:0 18px 18px;flex-direction:column;align-items:stretch}
+  .net-search-wrap{max-width:100%}
+  .net-grid{grid-template-columns:1fr;margin:0 18px 80px}
+  .net-hero{padding:20px 18px 0}
+}
+@media(max-width:480px){
+  .net-kpi-grid{grid-template-columns:1fr 1fr}
+  .net-kpi:nth-child(5){display:none}
+}
+</style>
+
+<script>
+/* ─── Page navigation ─── */
+function showPage(page) {
+  var pages = ['home','network'];
+  pages.forEach(function(p) {
+    var el = document.getElementById('page-' + p);
+    if (el) el.style.display = p === page ? 'block' : 'none';
+  });
+  // Update sidebar active states
+  document.querySelectorAll('.nav-item[id^="nav-"]').forEach(function(el) {
+    el.classList.remove('active');
+  });
+  var activeNav = document.getElementById('nav-' + page);
+  if (activeNav) activeNav.classList.add('active');
+  // Update mobile bottom nav
+  document.querySelectorAll('.bn-item').forEach(function(el, i) {
+    el.classList.remove('active');
+    if ((page === 'home' && i === 0) || (page === 'network' && i === 1)) {
+      el.classList.add('active');
+    }
+  });
+  // Scroll to top
+  var main = document.querySelector('.main');
+  if (main) main.scrollTop = 0;
+}
+
+/* Wire mobile bottom nav Network item */
+document.addEventListener('DOMContentLoaded', function() {
+  var bnItems = document.querySelectorAll('.bn-item');
+  if (bnItems[1]) {
+    bnItems[1].onclick = function() { showPage('network'); };
+  }
+  if (bnItems[0]) {
+    bnItems[0].onclick = function() { showPage('home'); };
+  }
+  // Make content area scrollable on each page
+  var homeEl = document.getElementById('page-home');
+  if (homeEl) homeEl.style.cssText = 'padding:28px 28px 60px;overflow-y:auto;flex:1';
+  var netEl = document.getElementById('page-network');
+  if (netEl) netEl.style.cssText = 'overflow-y:auto;flex:1';
+});
+
+/* ─── Network search & filter ─── */
+var currentFilter = 'all';
+
+function filterContacts() {
+  var query = (document.getElementById('net-search-input').value || '').toLowerCase().trim();
+  var clearBtn = document.getElementById('net-clear-btn');
+  if (clearBtn) clearBtn.style.display = query ? 'flex' : 'none';
+
+  var cards = document.querySelectorAll('#net-contacts-grid .ccard');
+  var visible = 0;
+
+  cards.forEach(function(card) {
+    var name     = (card.dataset.name     || '').toLowerCase();
+    var type     = (card.dataset.type     || '').toLowerCase();
+    var city     = (card.dataset.city     || '').toLowerCase();
+    var category = (card.dataset.category || '').toLowerCase();
+
+    var matchesSearch = !query ||
+      name.includes(query) ||
+      type.includes(query) ||
+      city.includes(query) ||
+      category.includes(query);
+
+    var matchesFilter = currentFilter === 'all' || type === currentFilter;
+
+    if (matchesSearch && matchesFilter) {
+      card.classList.remove('hidden');
+      visible++;
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+
+  var empty = document.getElementById('net-empty');
+  if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+}
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.net-filter-btn').forEach(function(b) {
+    b.classList.remove('active');
+  });
+  if (btn) btn.classList.add('active');
+  filterContacts();
+}
+
+function clearSearch() {
+  var inp = document.getElementById('net-search-input');
+  if (inp) inp.value = '';
+  var clearBtn = document.getElementById('net-clear-btn');
+  if (clearBtn) clearBtn.style.display = 'none';
+  filterContacts();
+}
+</script>
+
+</body>
+</html>
