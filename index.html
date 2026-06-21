@@ -338,7 +338,7 @@ html,body{min-height:100%;font-family:'Inter',system-ui,sans-serif;font-size:14p
 
     <!-- CONTENT -->
     <div class="content" style="flex:1;display:flex;flex-direction:column;overflow:hidden;padding:0">
-      <div id="page-home" style="padding:28px 28px 60px;overflow-y:auto;flex:1">
+      <div id="page-home" style="padding:28px 28px 60px">
 
       <!-- SECTION 1: HERO -->
       <div class="hero sec">
@@ -745,7 +745,7 @@ html,body{min-height:100%;font-family:'Inter',system-ui,sans-serif;font-size:14p
     <!-- ═══════════════════════════════════════════
          NETWORK CRM PAGE
          ═══════════════════════════════════════════ -->
-    <div id="page-network" style="display:none">
+    <div id="page-network">
 
       <!-- NETWORK HERO -->
       <div class="net-hero">
@@ -1349,8 +1349,9 @@ html,body{min-height:100%;font-family:'Inter',system-ui,sans-serif;font-size:14p
 
 /* Page layout */
 .net-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:32px 32px 0;margin-bottom:28px}
-#page-network{padding:0;overflow-y:auto;flex:1}
-#page-home{padding:0;overflow-y:auto;flex:1}
+/* ── PAGE VISIBILITY ── */
+#page-home,#page-network{overflow-y:auto;flex:1;display:none}
+#page-home.page-active,#page-network.page-active{display:block}
 
 /* KPI strip */
 .net-kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:0 32px 28px}
@@ -1467,43 +1468,43 @@ html,body{min-height:100%;font-family:'Inter',system-ui,sans-serif;font-size:14p
 <script>
 /* ─── Page navigation ─── */
 function showPage(page) {
-  var pages = ['home','network'];
-  pages.forEach(function(p) {
+  /* hide all pages */
+  ['home','network'].forEach(function(p) {
     var el = document.getElementById('page-' + p);
-    if (el) el.style.display = p === page ? 'block' : 'none';
+    if (el) el.classList.remove('page-active');
   });
-  // Update sidebar active states
+  /* show target page */
+  var target = document.getElementById('page-' + page);
+  if (target) target.classList.add('page-active');
+
+  /* update sidebar nav */
   document.querySelectorAll('.nav-item[id^="nav-"]').forEach(function(el) {
     el.classList.remove('active');
   });
   var activeNav = document.getElementById('nav-' + page);
   if (activeNav) activeNav.classList.add('active');
-  // Update mobile bottom nav
+
+  /* update mobile bottom nav */
   document.querySelectorAll('.bn-item').forEach(function(el, i) {
     el.classList.remove('active');
     if ((page === 'home' && i === 0) || (page === 'network' && i === 1)) {
       el.classList.add('active');
     }
   });
-  // Scroll to top
-  var main = document.querySelector('.main');
-  if (main) main.scrollTop = 0;
+
+  /* scroll content to top */
+  var target2 = document.getElementById('page-' + page);
+  if (target2) target2.scrollTop = 0;
 }
 
-/* Wire mobile bottom nav Network item */
 document.addEventListener('DOMContentLoaded', function() {
+  /* show home page on first load */
+  showPage('home');
+
+  /* wire mobile bottom nav */
   var bnItems = document.querySelectorAll('.bn-item');
-  if (bnItems[1]) {
-    bnItems[1].onclick = function() { showPage('network'); };
-  }
-  if (bnItems[0]) {
-    bnItems[0].onclick = function() { showPage('home'); };
-  }
-  // Make content area scrollable on each page
-  var homeEl = document.getElementById('page-home');
-  if (homeEl) homeEl.style.cssText = 'padding:28px 28px 60px;overflow-y:auto;flex:1';
-  var netEl = document.getElementById('page-network');
-  if (netEl) netEl.style.cssText = 'overflow-y:auto;flex:1';
+  if (bnItems[0]) bnItems[0].onclick = function() { showPage('home'); };
+  if (bnItems[1]) bnItems[1].onclick = function() { showPage('network'); };
 });
 
 /* ─── Network search & filter ─── */
