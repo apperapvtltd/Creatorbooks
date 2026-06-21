@@ -12,7 +12,7 @@
 html,body{min-height:100%;font-family:'Inter',system-ui,sans-serif;font-size:14px;background:#F8FAFC;color:#0F172A;-webkit-font-smoothing:antialiased}
 
 /* ── SHELL ── */
-.shell{display:flex;height:100vh;overflow:hidden}
+.shell{display:flex;height:100vh;height:100dvh;overflow:hidden}
 
 /* ── SIDEBAR ── */
 .sidebar{width:240px;background:#fff;border-right:1px solid #E2E8F0;display:flex;flex-direction:column;flex-shrink:0;height:100vh}
@@ -37,7 +37,7 @@ html,body{min-height:100%;font-family:'Inter',system-ui,sans-serif;font-size:14p
 .plan-tag{margin-left:auto;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;font-size:10px;font-weight:700;border-radius:8px;padding:3px 8px}
 
 /* ── MAIN ── */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;min-height:0}
 
 /* ── HEADER ── */
 .header{height:64px;background:rgba(255,255,255,.97);border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:12px;padding:0 28px;flex-shrink:0;backdrop-filter:blur(8px)}
@@ -217,18 +217,21 @@ html,body{min-height:100%;font-family:'Inter',system-ui,sans-serif;font-size:14p
 @media(max-width:900px){
   .sidebar{display:none}
   .main{margin-left:0}
+  .header{position:sticky;top:0;z-index:40;padding:0 16px;height:56px}
   .kpi-grid{grid-template-columns:1fr 1fr}
-  .ai-cards{grid-template-columns:1fr 1fr}
+  .ai-cards{grid-template-columns:1fr}
   .three-col{grid-template-columns:1fr}
   .brands-grid{grid-template-columns:1fr 1fr}
-  .content{padding:20px 18px 100px}
   .hero-greeting{font-size:22px}
   .hero-sub{font-size:13px}
+  #page-home{padding:20px 16px 100px}
+  #page-network{padding-bottom:100px}
 }
 @media(max-width:480px){
-  .kpi-grid{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:1fr 1fr}
   .ai-cards{grid-template-columns:1fr}
   .brands-grid{grid-template-columns:1fr}
+  .header{padding:0 14px}
 }
 
 /* ── ICON SYSTEM (inline SVG) ── */
@@ -337,7 +340,7 @@ html,body{min-height:100%;font-family:'Inter',system-ui,sans-serif;font-size:14p
     </div>
 
     <!-- CONTENT -->
-    <div class="content" style="flex:1;overflow:hidden;padding:0;position:relative">
+    <div class="content" style="flex:1;overflow:hidden;padding:0;position:relative;min-height:0">
       <div id="page-home" style="padding:28px 28px 60px">
 
       <!-- SECTION 1: HERO -->
@@ -1452,16 +1455,16 @@ html,body{min-height:100%;font-family:'Inter',system-ui,sans-serif;font-size:14p
 
 /* Mobile */
 @media(max-width:900px){
-  .net-kpi-grid{grid-template-columns:repeat(3,1fr);margin:0 18px 20px}
-  .net-kpi:nth-child(4),.net-kpi:nth-child(5){display:none}
-  .net-search-row{margin:0 18px 18px;flex-direction:column;align-items:stretch}
+  .net-kpi-grid{grid-template-columns:repeat(3,1fr);margin:0 16px 18px}
+  .net-kpi:nth-child(4),.net-kpi:nth-child(5){display:block}
+  .net-search-row{margin:0 16px 16px;flex-direction:column;align-items:stretch}
   .net-search-wrap{max-width:100%}
-  .net-grid{grid-template-columns:1fr;margin:0 18px 80px}
-  .net-hero{padding:20px 18px 0}
+  .net-grid{grid-template-columns:1fr;margin:0 16px 0}
+  .net-hero{padding:20px 16px 0}
 }
 @media(max-width:480px){
   .net-kpi-grid{grid-template-columns:1fr 1fr}
-  .net-kpi:nth-child(5){display:none}
+  .net-kpi:nth-child(5){display:block}
 }
 </style>
 
